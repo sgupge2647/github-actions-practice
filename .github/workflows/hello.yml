@@ -1,0 +1,25 @@
+name: Hello Actions
+
+# このワークフローが動くタイミング（トリガー）
+on:
+  push: # リポジトリに何かがpushされたとき
+    branches: [main]
+
+jobs:
+  say-hello:
+    runs-on: ubuntu-latest # GitHubが用意する仮想マシン上で実行される
+    steps:
+      - name: リポジトリの中身を取得
+        uses: actions/checkout@v4
+
+      - name: 挨拶メッセージを表示
+        run: echo "🎉 push を検知して自動実行されました！"
+
+      - name: README.md が存在するかチェック
+        run: |
+          if [ -f README.md ]; then
+            echo "✅ README.md が見つかりました。チェックOKです。"
+          else
+            echo "❌ README.md が見つかりません！"
+            exit 1
+          fi
